@@ -4,20 +4,17 @@ from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import Command
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from datetime import datetime, timedelta
 
-# ========== НАСТРОЙКИ ==========
-TOKEN = "8556395320:AAHP5utdJlFvyZQDRiFBOvC_vpVCYJAkVU0"
-CHANNEL_USERNAME = "@jobeasyco"
-ADMIN_CHAT_ID = -1003772994069
+# ========== НАСТРОЙКИ ИЗ ПЕРЕМЕННЫХ ОКРУЖЕНИЯ RAILWAY ==========
+TOKEN = os.environ.get("TOKEN", "8556395320:AAHP5utdJlFvyZQDRiFBOvC_vpVCYJAkVU0")
+CHANNEL_USERNAME = os.environ.get("CHANNEL_USERNAME", "@jobeasyco")
+ADMIN_CHAT_ID = int(os.environ.get("ADMIN_CHAT_ID", -1003772994069))
 
 # ========== ИНИЦИАЛИЗАЦИЯ ==========
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 bot = Bot(token=TOKEN)
-storage = MemoryStorage()  # Хранилище в памяти
-dp = Dispatcher(storage=storage)
+dp = Dispatcher()
 
 # ========== ХРАНЕНИЕ ПОПЫТОК (в памяти) ==========
 user_attempts = {}  # {user_id: {"count": 1, "last_time": timestamp}}
